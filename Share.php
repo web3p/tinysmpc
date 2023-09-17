@@ -20,6 +20,15 @@ class Share {
     return new Share($sum, $this->owner);
   }
 
+  public function sub(Share $scalar): Share
+  {
+    if ($this->owner !== $scalar->owner) {
+      throw new Error("should have the same owner");
+    }
+    $sum = mod(bcsub($this->value, $scalar->value));
+    return new Share($sum, $this->owner);
+  }
+
   public function send_to(VirtualMachine $owner): Share
   {
     return new Share($this->value, $owner);
