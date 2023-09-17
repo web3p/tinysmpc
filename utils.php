@@ -21,12 +21,8 @@ function n_from_shares (array $shares, VirtualMachine $owner)
   return $sum->value;
 }
 
-function n_to_shares(int $n, array $owners)
+function n_to_shares(string $n, array $owners)
 {
-  if (PHP_INT_MIN > $n || PHP_INT_MAX < $n ) {
-    throw new Error("n is too large");
-  }
-
   $values = [];
   for ($i = 0; $i < count($owners) - 1; $i++) {
     $values[] = (string) rand(PHP_INT_MIN, PHP_INT_MAX);

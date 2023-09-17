@@ -6,9 +6,6 @@ class Share {
 
   public function __construct(string $value, VirtualMachine $owner)
   {
-    // if (PHP_INT_MIN > $value || PHP_INT_MAX < $value ) {
-    //   throw new Error("value is too large");
-    // }
     $owner->objects[] = $this;
     $this->value = $value;
     $this->owner = $owner;
