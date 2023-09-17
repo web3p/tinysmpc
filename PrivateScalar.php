@@ -1,10 +1,10 @@
 <?php
 
 class PrivateScalar {
-  public int $value;
+  public string $value;
   public VirtualMachine $owner;
 
-  public function __construct(int $value, VirtualMachine $owner)
+  public function __construct(string $value, VirtualMachine $owner)
   {
     $owner->objects[] = $this;
     $this->value = $value;

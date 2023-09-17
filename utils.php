@@ -1,9 +1,10 @@
 <?php
 
-function mod (int $n): int
+// TODO: add Q prime size
+function mod (string $n): string
 {
-  // return (int) ($n + PHP_INT_MIN + 1) % 2**64 - (PHP_INT_MAX + 1);
-  return ($n + 1025) % 2**10 - (1025);
+  // return bcsub(bcmod(bcadd((string) $n, (string) (PHP_INT_MIN + 1), 10), bcpow(2, 64)), bcadd(PHP_INT_MAX, 1));
+  return $n;
 }
 
 function n_from_shares (array $shares, VirtualMachine $owner)
@@ -22,21 +23,20 @@ function n_from_shares (array $shares, VirtualMachine $owner)
 
 function n_to_shares(int $n, array $owners)
 {
-  if (PHP_INT_MIN > $n || $n > PHP_INT_MAX) {
+  if (PHP_INT_MIN > $n || PHP_INT_MAX < $n ) {
     throw new Error("n is too large");
   }
 
   $values = [];
   for ($i = 0; $i < count($owners) - 1; $i++) {
-    // $values[] = rand(PHP_INT_MIN, PHP_INT_MAX);
-    $values[] = rand(-1024, 1024);
+    $values[] = (string) rand(PHP_INT_MIN, PHP_INT_MAX);
   }
 
-  $sum = 0;
+  $sum = '0';
   foreach ($values as $value) {
-    $sum += $value;
+    $sum = bcadd($sum, $value, 10);
   }
-  $values[] = mod($n - $sum);
+  $values[] = mod(bcsub($n, $sum, 10));
 
   $shares = [];
 
